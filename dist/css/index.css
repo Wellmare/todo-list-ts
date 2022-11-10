@@ -1,0 +1,16 @@
+body .cards {
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+}
+
+@media (max-width: 2000px) {
+    body .container-sm {
+        max-width: 850px;
+    }
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
