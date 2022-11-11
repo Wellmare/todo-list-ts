@@ -1,5 +1,10 @@
 export const getDataFromLocalStorage = <T>(key: string) => {
-    return JSON.parse(localStorage.getItem(key)!) as T
+    const recievedItem = localStorage.getItem(key)
+    try {
+        return JSON.parse(recievedItem!)
+    } catch (error) {
+        return recievedItem
+    }
 }
 
 export const setDataToLocalStorage = <T>(key: string, value: T) => {

@@ -6,7 +6,7 @@ export enum Themes {
 }
 
 export enum LocalStorageKeys {
-    THEME = 'theme'
+    THEME = 'bs.prefers-color-scheme'
 }
 
 export enum Selectors {
