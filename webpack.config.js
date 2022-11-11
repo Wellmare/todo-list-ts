@@ -13,5 +13,13 @@ module.exports = {
                 loader: 'ts-loader'
             }
         ]
+    },
+    resolve: {
+        // Add `.ts` and `.tsx` as a resolvable extension.
+        extensions: ['.ts', '.js'],
+        // Add support for TypeScripts fully qualified ESM imports.
+        extensionAlias: {
+            '.js': ['.js', '.ts']
+        }
     }
 }
