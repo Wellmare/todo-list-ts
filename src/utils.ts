@@ -1,9 +1,9 @@
 export const getDataFromLocalStorage = <T>(key: string) => {
     const recievedItem = localStorage.getItem(key)
     try {
-        return JSON.parse(recievedItem!)
+        return JSON.parse(recievedItem!) as T
     } catch (error) {
-        return recievedItem
+        return recievedItem as T
     }
 }
 

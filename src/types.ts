@@ -6,9 +6,20 @@ export enum Themes {
 }
 
 export enum LocalStorageKeys {
-    THEME = 'bs.prefers-color-scheme'
+    THEME = 'bs.prefers-color-scheme',
+    TODO_LIST = 'todo-list'
 }
 
 export enum Selectors {
-    themeChanger = '#theme-changer'
+    themeChanger = '#theme-changer',
+    cardsContainer = '#cards-container'
+}
+
+// T0dolist
+
+export interface Todo {
+    readonly id: number
+    isCompleted: boolean
+    title: string
+    text: string
 }

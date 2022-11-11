@@ -16,7 +16,7 @@
   \**********************/
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst theming_1 = __importDefault(__webpack_require__(/*! ./modules/theming */ \"./src/modules/theming.ts\"));\r\nconsole.log('hello');\r\nnew theming_1.default();\r\n\n\n//# sourceURL=webpack://todo-list-ts/./src/index.ts?");
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst theming_1 = __importDefault(__webpack_require__(/*! ./modules/theming */ \"./src/modules/theming.ts\"));\r\nconst todoList_1 = __importDefault(__webpack_require__(/*! ./modules/todoList */ \"./src/modules/todoList.ts\"));\r\nnew theming_1.default();\r\nnew todoList_1.default();\r\n\n\n//# sourceURL=webpack://todo-list-ts/./src/index.ts?");
 
 /***/ }),
 
@@ -30,13 +30,23 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\n
 
 /***/ }),
 
+/***/ "./src/modules/todoList.ts":
+/*!*********************************!*\
+  !*** ./src/modules/todoList.ts ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nconst types_1 = __webpack_require__(/*! ../types */ \"./src/types.ts\");\r\nconst utils_1 = __webpack_require__(/*! ../utils */ \"./src/utils.ts\");\r\nclass TodoList {\r\n    constructor() {\r\n        this.addTodo = (todo) => {\r\n            this.todos.push(todo);\r\n            (0, utils_1.setDataToLocalStorage)(types_1.LocalStorageKeys.TODO_LIST, this.todos);\r\n            this.render();\r\n        };\r\n        this.setCompletedTodo = (id, isCompleted) => {\r\n            this.todos.map((value) => {\r\n                if (value.id === id) {\r\n                    value.isCompleted = isCompleted;\r\n                }\r\n            });\r\n            (0, utils_1.setDataToLocalStorage)(types_1.LocalStorageKeys.TODO_LIST, this.todos);\r\n            this.render();\r\n        };\r\n        this.deleteTodo = (id) => {\r\n            console.log(id);\r\n            console.log(this.todos);\r\n            this.todos = this.todos.filter((value) => {\r\n                return value.id !== id;\r\n            });\r\n            (0, utils_1.setDataToLocalStorage)(types_1.LocalStorageKeys.TODO_LIST, this.todos);\r\n            this.render();\r\n        };\r\n        this.render = () => {\r\n            const cardsContainer = (0, utils_1.getElementBySelector)(types_1.Selectors.cardsContainer);\r\n            cardsContainer.innerHTML = '';\r\n            this.todos.forEach((todo) => {\r\n                var _a, _b;\r\n                const card = document.createElement('div');\r\n                card.className = 'card mb-3';\r\n                card.innerHTML = `\r\n                <div class=\"card-body\">\r\n                    <h5 class=\"card-title ${todo.isCompleted ? 'line-through' : ''}\">${todo.title}</h5>\r\n                    <p class=\"card-text ${todo.isCompleted ? 'line-through' : ''}\">\r\n                        ${todo.text}\r\n                    </p>\r\n                    <div class=\"buttons\">\r\n                        <button class=\"btn ${todo.isCompleted ? 'btn-secondary' : 'btn-success'} btn-complete\">${todo.isCompleted ? 'UNCOMPLETE' : 'COMPLETE'}</button>\r\n                        <button class=\"btn btn-outline-danger btn-delete\">\r\n                            DELETE\r\n                        </button>\r\n                    </div>\r\n                </div>\r\n            `;\r\n                (_a = card.querySelector('.btn-complete')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', (e) => {\r\n                    e.preventDefault();\r\n                    this.setCompletedTodo(todo.id, !todo.isCompleted);\r\n                });\r\n                (_b = card.querySelector('.btn-delete')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', (e) => {\r\n                    e.preventDefault();\r\n                    console.log('delete');\r\n                    this.deleteTodo(todo.id);\r\n                });\r\n                cardsContainer.insertAdjacentElement('beforeend', card);\r\n            });\r\n        };\r\n        this.todos = (0, utils_1.getDataFromLocalStorage)(types_1.LocalStorageKeys.TODO_LIST) || [];\r\n        this.render();\r\n    }\r\n}\r\nexports[\"default\"] = TodoList;\r\n\n\n//# sourceURL=webpack://todo-list-ts/./src/modules/todoList.ts?");
+
+/***/ }),
+
 /***/ "./src/types.ts":
 /*!**********************!*\
   !*** ./src/types.ts ***!
   \**********************/
 /***/ ((__unused_webpack_module, exports) => {
 
-eval("\r\n// Theme\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.Selectors = exports.LocalStorageKeys = exports.Themes = void 0;\r\nvar Themes;\r\n(function (Themes) {\r\n    Themes[\"DARK\"] = \"dark\";\r\n    Themes[\"LIGHT\"] = \"light\";\r\n})(Themes = exports.Themes || (exports.Themes = {}));\r\nvar LocalStorageKeys;\r\n(function (LocalStorageKeys) {\r\n    LocalStorageKeys[\"THEME\"] = \"bs.prefers-color-scheme\";\r\n})(LocalStorageKeys = exports.LocalStorageKeys || (exports.LocalStorageKeys = {}));\r\nvar Selectors;\r\n(function (Selectors) {\r\n    Selectors[\"themeChanger\"] = \"#theme-changer\";\r\n})(Selectors = exports.Selectors || (exports.Selectors = {}));\r\n\n\n//# sourceURL=webpack://todo-list-ts/./src/types.ts?");
+eval("\r\n// Theme\r\nObject.defineProperty(exports, \"__esModule\", ({ value: true }));\r\nexports.Selectors = exports.LocalStorageKeys = exports.Themes = void 0;\r\nvar Themes;\r\n(function (Themes) {\r\n    Themes[\"DARK\"] = \"dark\";\r\n    Themes[\"LIGHT\"] = \"light\";\r\n})(Themes = exports.Themes || (exports.Themes = {}));\r\nvar LocalStorageKeys;\r\n(function (LocalStorageKeys) {\r\n    LocalStorageKeys[\"THEME\"] = \"bs.prefers-color-scheme\";\r\n    LocalStorageKeys[\"TODO_LIST\"] = \"todo-list\";\r\n})(LocalStorageKeys = exports.LocalStorageKeys || (exports.LocalStorageKeys = {}));\r\nvar Selectors;\r\n(function (Selectors) {\r\n    Selectors[\"themeChanger\"] = \"#theme-changer\";\r\n    Selectors[\"cardsContainer\"] = \"#cards-container\";\r\n})(Selectors = exports.Selectors || (exports.Selectors = {}));\r\n\n\n//# sourceURL=webpack://todo-list-ts/./src/types.ts?");
 
 /***/ }),
 

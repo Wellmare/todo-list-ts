@@ -1,9 +1,5 @@
 import { LocalStorageKeys, Selectors, Themes } from '../types'
-import {
-    getDataFromLocalStorage,
-    getElementBySelector,
-    setDataToLocalStorage
-} from '../utils'
+import { getDataFromLocalStorage, getElementBySelector } from '../utils'
 
 class Theming {
     public currentTheme: Themes = Themes.LIGHT

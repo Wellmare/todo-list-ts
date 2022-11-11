@@ -1,6 +1,6 @@
 import Theming from "./modules/theming";
-
-console.log('hello');
+import TodoList from "./modules/todoList";
 
 
 new Theming()
+new TodoList()

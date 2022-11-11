@@ -14,3 +14,7 @@ body .cards {
     display: flex;
     justify-content: space-between;
 }
+
+.line-through {
+    text-decoration: line-through;
+}
