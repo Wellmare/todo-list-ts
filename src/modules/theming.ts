@@ -10,7 +10,7 @@ class Theming {
     }
 
     constructor() {
-        const theme = getDataFromLocalStorage<String>(LocalStorageKeys.THEME)
+        const theme = getDataFromLocalStorage<string>(LocalStorageKeys.THEME)
         this.currentTheme = theme === 'dark' ? Themes.DARK : Themes.LIGHT
 
         getElementBySelector<HTMLButtonElement>(

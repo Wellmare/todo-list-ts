@@ -1,23 +1,67 @@
-import { LocalStorageKeys, Selectors, Todo } from '../types'
-import { getDataFromLocalStorage, getElementBySelector, setDataToLocalStorage } from '../utils'
+import {
+    IFormInput,
+    IInputValue,
+    InputsNames,
+    LocalStorageKeys,
+    Selectors,
+    ITodo
+} from '../types'
+import {
+    getDataFromLocalStorage,
+    getElementBySelector,
+    setDataToLocalStorage
+} from '../utils'
+import Form from './form'
+
+import uniqid from 'uniqid'
 
 class TodoList {
-    private todos: Todo[] | []
+    private todos: ITodo[] = []
 
     constructor() {
-        this.todos = getDataFromLocalStorage<Todo[]>(LocalStorageKeys.TODO_LIST) || []
+        const todos = getDataFromLocalStorage<ITodo[]>(
+            LocalStorageKeys.TODO_LIST
+        )
+
+        this.controlForm()
+
+        this.todos = todos || []
         this.render()
     }
 
-    private addTodo = (todo: Todo) => {
+    private controlForm = () => {
+        const inputs: IFormInput[] = [
+            { name: InputsNames.TITLE, selector: Selectors.titleInput },
+            { name: InputsNames.TEXT, selector: Selectors.textInput }
+        ]
+
+        const onSubmit = (inputsValues: IInputValue[]) => {
+            const todo: ITodo = {
+                id: uniqid(),
+                isCompleted: false,
+                title: inputsValues[0].value,
+                text: inputsValues[1].value
+            }
+
+            this.addTodo(todo)
+        }
+
+        const submitButton = getElementBySelector<HTMLButtonElement>(
+            Selectors.submitButton
+        )
+
+        new Form(inputs, submitButton, onSubmit)
+    }
+
+    private addTodo = (todo: ITodo) => {
         this.todos.push(todo)
 
         setDataToLocalStorage(LocalStorageKeys.TODO_LIST, this.todos)
         this.render()
     }
 
-    private setCompletedTodo = (id: number, isCompleted: boolean) => {
-        this.todos.map((value: Todo) => {
+    private setCompletedTodo = (id: string, isCompleted: boolean) => {
+        this.todos.map((value: ITodo) => {
             if (value.id === id) {
                 value.isCompleted = isCompleted
             }
@@ -27,12 +71,11 @@ class TodoList {
         this.render()
     }
 
-    private deleteTodo = (id: number) => {
-        console.log(id);
-        console.log(this.todos);
-        
-        
-        this.todos = this.todos.filter((value: Todo) => {
+    private deleteTodo = (id: string) => {
+        console.log(id)
+        console.log(this.todos)
+
+        this.todos = this.todos.filter((value: ITodo) => {
             return value.id !== id
         })
 
@@ -46,7 +89,7 @@ class TodoList {
         )
         cardsContainer.innerHTML = ''
 
-        this.todos.forEach((todo: Todo) => {
+        this.todos.forEach((todo: ITodo) => {
             const card = document.createElement('div')
             card.className = 'card mb-3'
 
@@ -85,8 +128,8 @@ class TodoList {
                 'click',
                 (e) => {
                     e.preventDefault()
-                    console.log('delete');
-                    
+                    console.log('delete')
+
                     this.deleteTodo(todo.id)
                 }
             )
